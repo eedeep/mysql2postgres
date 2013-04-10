@@ -90,6 +90,10 @@ EOF
       @f << ",\n  CONSTRAINT #{table.name}_pkey PRIMARY KEY(#{primary_index[:columns].map {|col| PGconn.quote_ident(col)}.join(", ")})"
     end
     
+      if index[:name].length > 62
+          start = index[:name].length - 62
+        index[:name] = index[:name][start..-1]
+      end
     @f << <<-EOF
 \n)
 WITHOUT OIDS;
